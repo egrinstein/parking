@@ -1,5 +1,5 @@
 from gtkmvc import Model
-import sqlite3
+from database import Database
 
 
  
@@ -15,14 +15,7 @@ class ParkingModel (Model):
    __observables__ = ("status",)
    @Model.getter
    def status(self):
-       print "querying database..."
-       st =self.db_conn.execute("SELECT * FROM parking_status")
-       st = st.fetchall()
-       status_dict = {}
-       for park in st:
-           status_dict[park[0]] = bool(park[1])
-
-       return status_dict
+       return self.db_conn.get_parking()
    @Model.setter
    def status(self, value): return
 
@@ -30,7 +23,7 @@ class ParkingModel (Model):
 
    def __init__(self):
        Model.__init__(self)
-       self.db_conn = sqlite3.connect('db.sqlite')
+       self.db_conn = Database()
         
 
    def get_status(self): 
