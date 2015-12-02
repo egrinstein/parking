@@ -18,28 +18,29 @@ class ParkingView(View):
         gtk.main_quit()
         return False
 
-	def set_status(self,status):
-		for park in status:
-			 self.parkingSign[i].modify_bg(gtk.STATE_NORMAL,statusToColor[status[park]])
+    def set_status(self,status):
+        print status,type(status)
+        for park in status:
+            self.parkingSign[park].modify_bg(gtk.STATE_NORMAL,statusToColor[status[park]])
 
     def __init__(self,status):
         builder = os.path.join("./", "example.glade")
         self.glade_xmlWidgets = []
-        
-        
-        
+        View.__init__(self)
+                
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("Parking Spots Availability")
         self.window.connect("delete_event", self.delete_event)
         self.window.set_border_width(200)
-        self.box1 = gtk.HBox(False, 0)
-        self.window.add(self.box1)
+        self.box1 = gtk.HBox(False, 10)
+        #self.window.add(self.box1)
         self.parkingSign = {}
-        
+
+        print status,type(status)
         for i in status:
             self.parkingSign[i] = gtk.DrawingArea()
             self.parkingSign[i].set_size_request(100,200)
-            self.parkingSign[i].modify_bg(gtk.STATE_NORMAL,statusToColor[0])
+            self.parkingSign[i].modify_bg(gtk.STATE_NORMAL,statusToColor[status[i]])
             self.parkingSign[i].show()
 		  
             label = gtk.Label()
@@ -52,5 +53,14 @@ class ParkingView(View):
             self.box1.pack_start(vbox)
 
         self.box1.show()
+
+        self['button'] = gtk.Button('refresh')
+        self.box2 = gtk.VBox(False,10)
+        self.window.add(self.box2)
+        self.box2.pack_start(self['button'])
+        self.box2.pack_start(self.box1)
+        self.box2.show()
+        self['button'].show()
+
         self.window.show()
 
