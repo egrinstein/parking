@@ -20,26 +20,31 @@ def connect():
         
         conn = psycopg2.connect("""dbname=\'{0}\' user=\'{1}\' host=\'{2}\' 
                                 password=\'{3}\'""".format(database_name,user,host,password))
-        return conn.cursor()
+        return conn
     elif db == 'mysql':
         conn = MySQLdb.connect(host=host,port=port,user=user,passwd=password,db=database_name)
-        return conn.cursor()
+        return conn
 
 class Database:
     def __init__(self):
-        self._cursor = connect()
+        self._conn = connect()
+        self._cursor = self._conn.cursor()
     def set_parking(self,parking_num,value):
-        self._cursor.execute("""UPDATE parking_status
-                                SET status = %(value)
-                                WHERE parking_num = %(adr)
-                                """ %{"value":value,"adr":address})
-        self._cursor.commit()
+        print value,type(value),parking_num,type(parking_num),'\n\n\n'
+        response = self._cursor.execute("""UPDATE parking_status
+                                SET parking_status = {0}
+                                WHERE parking_number = {1}
+                                """.format(value,parking_num))
+        
+        self._conn.commit()
     def get_parking(self):
        self._cursor.execute("SELECT * FROM parking_status")
-       
        st = self._cursor.fetchall()
        status_dict = {}
        for park in st:
            status_dict[park[0]] = bool(park[1])
        return status_dict
-
+    def pr(self):
+        st = self.get_parking()
+        print "status:",st 
+        
