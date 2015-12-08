@@ -31,7 +31,6 @@ class Database:
         self._cursor = self._conn.cursor()
     def set_parking(self,parking_num,value):
         print value,type(value),parking_num,type(parking_num),'\n\n\n'
-        self._conn = connect()
         response = self._cursor.execute("""UPDATE parking_status
                                 SET parking_status = {0}
                                 WHERE parking_number = {1}
