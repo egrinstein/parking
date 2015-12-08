@@ -15,6 +15,7 @@ class ParkingModel (Model):
    __observables__ = ("status",)
    @Model.getter
    def status(self):
+       print "querying db..."
        return self.db_conn.get_parking()
    @Model.setter
    def status(self, value): return

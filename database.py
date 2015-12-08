@@ -31,6 +31,7 @@ class Database:
         self._cursor = self._conn.cursor()
     def set_parking(self,parking_num,value):
         print value,type(value),parking_num,type(parking_num),'\n\n\n'
+        self._conn = connect()
         response = self._cursor.execute("""UPDATE parking_status
                                 SET parking_status = {0}
                                 WHERE parking_number = {1}
@@ -38,7 +39,10 @@ class Database:
         
         self._conn.commit()
     def get_parking(self):
+       self._conn = connect()
+       self._cursor = self._conn.cursor()
        self._cursor.execute("SELECT * FROM parking_status")
+
        st = self._cursor.fetchall()
        status_dict = {}
        for park in st:

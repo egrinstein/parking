@@ -4,7 +4,7 @@ from time import time
 
 
 CLOCK_TIME = 5 
-AVG_RATE = 50
+AVG_RATE = 35 
 
 
 
@@ -45,7 +45,7 @@ while True:
     now = int(time())
     #print "time: ",now - clock
     try: 
-        movement_table[park] += 1
+        movement_table[park] += park_value 
         park = park_value = -1
     except KeyError:
         print "not a parking spot:",park 

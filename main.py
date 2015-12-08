@@ -3,15 +3,16 @@ import gtk
 from model import ParkingModel
 from controller import ParkingController
 from view import ParkingView
+from  database import Database
 
-import sqlite3
 
 def main():
+   db = Database()
+   #db.set_parking(1,0)
+   #db.set_parking(2,0)
    m = ParkingModel()
    v = ParkingView(m.status)
-   print v,type(v)
    c = ParkingController(m, v)
-
    gtk.main()
 
 if __name__ == "__main__":
