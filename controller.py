@@ -15,7 +15,7 @@ class ParkingController(Controller):
 
    def on_button_clicked(self, button):
        self.view.set_status(self.model.status)
-'''
-   def __init__(self,model,view):
-       Controller.__init__(self, model, view)
-       print "...controller initiated." '''
+
+
+   
+       
